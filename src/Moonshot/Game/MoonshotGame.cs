@@ -11,7 +11,7 @@ namespace Moonshot.Game
 
         public MoonshotGame()
         {
-            Raylib.InitWindow(MoonVars.ScreenWidth, MoonVars.ScreenHeight, "Moonshot");
+            Raylib.InitWindow(MoonVars.ScreenWidth, MoonVars.ScreenHeight, "Moonshot - " + MoonVars.Version);
             //Raylib.SetTargetFPS(MoonVars.TargetFPS);
 
             this.target = Raylib.LoadRenderTexture(MoonVars.RenderWidth, MoonVars.RenderHeight);
@@ -34,22 +34,22 @@ namespace Moonshot.Game
 
                 this.scene.Draw(this.target);
 
-                Raylib.BeginDrawing();
-
                 Raylib.DrawTexturePro(this.target.texture,
                     new Rectangle(0, 0, MoonVars.RenderWidth, -MoonVars.RenderHeight),
                     new Rectangle(0, 0, MoonVars.ScreenWidth, MoonVars.ScreenHeight),
                     new Vector2(0, 0), 0, Color.WHITE
                 );
-
-                Raylib.EndDrawing();
             }
+        }
+
+        public void NextScene(IScene scene)
+        {
+            this.scene = scene;
         }
 
         ~MoonshotGame()
         {
             Raylib.CloseWindow();
         }
-
     }
 }

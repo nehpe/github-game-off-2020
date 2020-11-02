@@ -20,8 +20,11 @@ namespace Moonshot.Game.Scenes
 
             loadAssets();
 
+            font = AssetManager.GetFont("jupiter_crash");
+
             textMeasure = Raylib.MeasureTextEx(font, "nehpe", fontSize, 1);
 
+            //TODO(np): colors should maybe be static / globally available
             bgColor = new Color(36, 36, 36, 255);
             fgColor = new Color(196, 196, 196, 255);
         }
@@ -29,8 +32,8 @@ namespace Moonshot.Game.Scenes
         private void loadAssets()
         {
             AssetManager.AddFont("jupiter_crash", Raylib.LoadFont("Resources/Fonts/jupiter_crash.png"));
-
-            font = AssetManager.GetFont("jupiter_crash");
+            AssetManager.AddFont("pixantiqua", Raylib.LoadFont("Resources/Fonts/pixantiqua.png"));
+            AssetManager.AddFont("alpha_beta", Raylib.LoadFont("Resources/Fonts/alpha_beta.png"));
         }
 
         public void Draw(RenderTexture2D target)
@@ -41,7 +44,13 @@ namespace Moonshot.Game.Scenes
 
                 Raylib.ClearBackground(bgColor);
 
-                Raylib.DrawTextEx(font, "nehpe", new Vector2(0, 0), fontSize, 1, fgColor);
+                //TODO(np): center this text
+                Raylib.DrawTextEx(font, "nehpe",
+                    new Vector2(
+                        Text.Center(MoonVars.RenderWidth, (int)textMeasure.X),
+                        Text.Center(MoonVars.RenderHeight, (int)textMeasure.Y)
+                    ),
+                    fontSize, 1, fgColor);
 
                 Raylib.EndTextureMode();
             }
@@ -50,6 +59,10 @@ namespace Moonshot.Game.Scenes
 
         public void Update()
         {
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
+            {
+                g.NextScene(new MenuScene(this.g));
+            }
         }
     }
 }
