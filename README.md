@@ -1,1 +1,3 @@
-# github-game-off-2020
+# Astrogate
+
+A game for the 2020 GitHub GameOff (link?)
