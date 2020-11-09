@@ -15,13 +15,14 @@ namespace Moonshot.Game.Scenes
         int fontSize = 20;
         Font font;
 
+
         public MenuScene(MoonshotGame g)
         {
             this.g = g;
 
             font = AssetManager.GetFont("alpha_beta");
 
-            textMeasure = Raylib.MeasureTextEx(font, "Moonshot", fontSize, 1);
+            textMeasure = Raylib.MeasureTextEx(font, MoonVars.Name, fontSize, 1);
         }
 
         public void Draw(RenderTexture2D target)
@@ -33,7 +34,7 @@ namespace Moonshot.Game.Scenes
                 Raylib.ClearBackground(new Color(36, 36, 36, 255));
 
                 Raylib.DrawTextEx(
-                    font, "Moonshot",
+                    font, MoonVars.Name,
                     new Vector2(
                         Text.Center(MoonVars.RenderWidth, (int)textMeasure.X),
                         MoonVars.RenderHeight / 4

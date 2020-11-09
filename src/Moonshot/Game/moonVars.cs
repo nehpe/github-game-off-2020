@@ -15,7 +15,7 @@ namespace Moonshot.Game
 
         // Strings
         public static string Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
-        public static string Name = "Moonshot";
+        public static string Name = "Astrogate";
 
         public static bool DebugMode = false;
     }
