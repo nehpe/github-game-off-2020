@@ -1,7 +1,6 @@
 ﻿using Moonshot.Game.Entities;
 using Moonshot.Utilities;
 using Raylib_cs;
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -19,6 +18,8 @@ namespace Moonshot.Game.Scenes
         Vector2 uiMeasurement = Vector2.Zero;
 
         float speed = 50f;
+        Vector2 minMap;
+        Vector2 maxMap;
 
         public PlayScene(MoonshotGame g)
         {
@@ -45,8 +46,15 @@ namespace Moonshot.Game.Scenes
 
             // Get uiFont
             uiFont = AssetManager.GetFont("alpha_beta");
-
             uiMeasurement = Raylib.MeasureTextEx(uiFont, "UI Here", uiFontSize, 1);
+
+            // Create bounding box
+            minMap = new Vector2(
+                MoonVars.RenderWidth / 2,
+                MoonVars.RenderHeight / 2
+            );
+
+            maxMap = new Vector2(512, 512);
         }
 
         public void Draw(RenderTexture2D target)
@@ -92,6 +100,12 @@ namespace Moonshot.Game.Scenes
                     MoonVars.RenderHeight - 18 - Text.Center(25, (int)uiMeasurement.Y)
                 ),
                 uiFontSize, 1, Color.GRAY
+            );
+
+            Raylib.DrawTextEx(
+                uiFont, "(" + cursor.Position.X + ", " + cursor.Position.Y + ")",
+                new Vector2(0, 0),
+                uiFontSize, 1, Color.GREEN
             );
         }
 
@@ -140,6 +154,10 @@ namespace Moonshot.Game.Scenes
             {
                 cursor.Position.Y += speed * Raylib.GetFrameTime();
             }
+
+            // Keep within bounds
+            cursor.Position.X = MathUtil.Clamp(cursor.Position.X, minMap.X, maxMap.X);
+            cursor.Position.Y = MathUtil.Clamp(cursor.Position.Y, minMap.Y, maxMap.Y);
         }
     }
 }
