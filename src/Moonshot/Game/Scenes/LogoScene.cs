@@ -26,7 +26,8 @@ namespace Moonshot.Game.Scenes
 
             //TODO(np): colors should maybe be static / globally available
             bgColor = new Color(36, 36, 36, 255);
-            fgColor = new Color(196, 196, 196, 255);
+            //fgColor = new Color(196, 196, 196, 255);
+            fgColor = Color.DARKBLUE;
         }
 
         private void loadAssets()
@@ -44,7 +45,6 @@ namespace Moonshot.Game.Scenes
 
                 Raylib.ClearBackground(bgColor);
 
-                //TODO(np): center this text
                 Raylib.DrawTextEx(font, "nehpe",
                     new Vector2(
                         Text.Center(MoonVars.RenderWidth, (int)textMeasure.X),

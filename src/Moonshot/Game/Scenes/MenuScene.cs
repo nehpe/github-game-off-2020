@@ -1,9 +1,6 @@
 ﻿using Moonshot.Utilities;
 using Raylib_cs;
-using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace Moonshot.Game.Scenes
 {
@@ -15,14 +12,21 @@ namespace Moonshot.Game.Scenes
         int fontSize = 20;
         Font font;
 
+        Font instructFont;
+        Vector2 instructMeasure;
+        int instructFontSize = 12;
+        string instruction = "Press Enter to Start";
+
 
         public MenuScene(MoonshotGame g)
         {
             this.g = g;
 
             font = AssetManager.GetFont("alpha_beta");
+            instructFont = AssetManager.GetFont("pixantiqua");
 
             textMeasure = Raylib.MeasureTextEx(font, MoonVars.Name, fontSize, 1);
+            instructMeasure = Raylib.MeasureTextEx(instructFont, instruction, instructFontSize, 1);
         }
 
         public void Draw(RenderTexture2D target)
@@ -42,7 +46,15 @@ namespace Moonshot.Game.Scenes
                     fontSize, 1, new Color(196, 196, 196, 255)
                 );
 
-                Raylib.DrawFPS(0, 0);
+                Raylib.DrawTextEx(
+                    instructFont, "Press Enter to Start",
+                    new Vector2(
+                        Text.Center(MoonVars.RenderWidth, (int)instructMeasure.X),
+                        MoonVars.RenderHeight / 4 * 3
+                    ),
+                    instructFontSize, 1, Color.DARKBLUE
+                );
+
                 Raylib.EndTextureMode();
             }
             Raylib.EndDrawing();

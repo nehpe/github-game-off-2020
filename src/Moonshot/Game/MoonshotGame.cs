@@ -13,6 +13,7 @@ namespace Moonshot.Game
         {
             Raylib.InitWindow(MoonVars.ScreenWidth, MoonVars.ScreenHeight, "Moonshot - " + MoonVars.Version);
             //Raylib.SetTargetFPS(MoonVars.TargetFPS);
+            Raylib.SetExitKey(KeyboardKey.KEY_Q);
 
             this.target = Raylib.LoadRenderTexture(MoonVars.RenderWidth, MoonVars.RenderHeight);
             this.scene = new LogoScene(this);
@@ -22,14 +23,6 @@ namespace Moonshot.Game
         {
             while (!Raylib.WindowShouldClose())
             {
-                //Raylib.BeginTextureMode(target);
-
-                //Raylib.ClearBackground(new Color(65, 61, 61, 255));
-                //Raylib.DrawCircle(50, 50, 20, Color.RED);
-                //Raylib.DrawText("Hello, world!", 12, 12, 20, Color.BLACK);
-
-                //Raylib.EndTextureMode();
-
                 this.scene.Update();
 
                 this.scene.Draw(this.target);
