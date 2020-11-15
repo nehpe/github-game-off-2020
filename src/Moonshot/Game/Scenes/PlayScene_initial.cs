@@ -7,14 +7,9 @@ namespace Moonshot.Game.Scenes
 {
     public partial class PlayScene
     {
-        private void initPlacement()
-        {
+        private void initPlacement() { }
 
-        }
-
-        private void drawInitialPlacementCamera()
-        {
-        }
+        private void drawInitialPlacementCamera() { }
 
         private void drawInitialPlacementUI()
         {
