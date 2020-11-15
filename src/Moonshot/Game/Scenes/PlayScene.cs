@@ -8,7 +8,7 @@ using System.Numerics;
 
 namespace Moonshot.Game.Scenes
 {
-    public class PlayScene : IScene
+    public partial class PlayScene : IScene
     {
         MoonshotGame g;
         List<IEntity> Entities = new List<IEntity>();
@@ -22,7 +22,7 @@ namespace Moonshot.Game.Scenes
         int uiFontSize = 12;
         Vector2 uiMeasurement = Vector2.Zero;
 
-        float speed = 50f;
+        float speed = 100f;
 
         public PlayScene(MoonshotGame g)
         {
@@ -49,10 +49,10 @@ namespace Moonshot.Game.Scenes
             // Set up UI elements
             var quarterWidth = MoonVars.RenderWidth / 4;
             var elementHeight = 16;
-            UIElements.Add(new Label("Ener " + GameState.Energy, new Rectangle(0, 0, quarterWidth, elementHeight), Color.DARKGREEN));
-            UIElements.Add(new Label("Ship " + GameState.Ships, new Rectangle(quarterWidth, 0, quarterWidth, elementHeight), Color.DARKBLUE));
+            UIElements.Add(new Label("Ener " + GameState.Energy, new Rectangle(0, 0, quarterWidth, elementHeight), Color.GREEN));
+            UIElements.Add(new Label("Ship " + GameState.Ships, new Rectangle(quarterWidth, 0, quarterWidth, elementHeight), Color.BLUE));
             UIElements.Add(new Label("Fuel " + GameState.Fuel, new Rectangle(quarterWidth * 2, 0, quarterWidth, elementHeight), Color.DARKGREEN));
-            UIElements.Add(new Label("Metl " + GameState.Metal, new Rectangle(quarterWidth * 3, 0, quarterWidth, elementHeight), Color.DARKBLUE));
+            UIElements.Add(new Label("Metl " + GameState.Metal, new Rectangle(quarterWidth * 3, 0, quarterWidth, elementHeight), Color.DARKGRAY));
 
             mouseCursor = new MouseCursor();
 
@@ -119,7 +119,7 @@ namespace Moonshot.Game.Scenes
             Raylib.DrawTextEx(
                 uiFont, "Place your Home",
                 new Vector2(
-                    0, 0
+                    4, 16
                 ),
                 uiFontSize, 1, Color.DARKPURPLE
             );

@@ -9,7 +9,6 @@ namespace Moonshot.Game.Entities
         Texture2D texture;
         Vector2 position;
         float opacity = 1f;
-        float opacityTimer = 0f;
         float opacitySpeed = 0.15f;
 
         public Star(int x, int y, float speed)

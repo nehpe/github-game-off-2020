@@ -5,7 +5,7 @@ namespace Moonshot.Game.Entities
 {
     public class HomePlanet : IEntity
     {
-        bool selected = false;
+        //bool selected = false;
         Vector2 pos;
         int size;
 

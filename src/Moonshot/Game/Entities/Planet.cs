@@ -10,7 +10,6 @@ namespace Moonshot.Game.Entities
         Vector2 pos;
         int size;
         int health;
-        Random rnd;
 
         public Planet(int x, int y, int size)
         {
