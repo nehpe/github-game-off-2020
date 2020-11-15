@@ -11,5 +11,4 @@ namespace Moonshot.Game.Entities
             Position = new Vector2(200, 200);
         }
     }
-
 }

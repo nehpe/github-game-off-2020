@@ -12,6 +12,8 @@ namespace Moonshot.Game.Scenes
         List<IEntity> Entities = new List<IEntity>();
         Camera2D camera;
         Cursor cursor;
+        Stars stars;
+        MouseCursor mouseCursor;
 
         Font uiFont;
         int uiFontSize = 12;
@@ -55,6 +57,9 @@ namespace Moonshot.Game.Scenes
             );
 
             maxMap = new Vector2(512, 512);
+
+            mouseCursor = new MouseCursor();
+            stars = new Stars();
         }
 
         public void Draw(RenderTexture2D target)
@@ -68,10 +73,14 @@ namespace Moonshot.Game.Scenes
                 Raylib.BeginMode2D(camera);
 
                 //_draw();
+                _drawGlobal();
                 switch (GameState.CurrentPhase)
                 {
                     case EGamePhase.InitialPlacement:
                         _drawInitialPlacementCamera();
+                        break;
+                    case EGamePhase.Expanding:
+                        _drawExpandingCamera();
                         break;
                 }
 
@@ -92,6 +101,11 @@ namespace Moonshot.Game.Scenes
             Raylib.EndDrawing();
         }
 
+        private void _drawGlobal()
+        {
+            stars.Draw();
+        }
+
         private void _drawIPUI()
         {
             Raylib.DrawTextEx(
@@ -101,6 +115,8 @@ namespace Moonshot.Game.Scenes
                 ),
                 uiFontSize, 1, Color.DARKPURPLE
             );
+
+            mouseCursor.Draw();
         }
 
         private void _drawInitialPlacementCamera()
@@ -109,8 +125,6 @@ namespace Moonshot.Game.Scenes
 
         private void _drawUI()
         {
-
-
             Raylib.DrawRectangle(
                 4, MoonVars.RenderHeight - 29,
                 MoonVars.RenderWidth - 8,
@@ -139,7 +153,7 @@ namespace Moonshot.Game.Scenes
             // );
         }
 
-        private void _draw()
+        private void _drawExpandingCamera()
         {
             foreach (IEntity e in Entities)
             {
@@ -155,6 +169,34 @@ namespace Moonshot.Game.Scenes
             {
                 e.Update();
             }
+
+            mouseCursor.Update();
+            stars.Update();
+
+            if (GameState.CurrentPhase == EGamePhase.InitialPlacement)
+            {
+                checkForPlacement();
+
+            }
+        }
+
+        private void checkForPlacement()
+        {
+            if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON))
+            {
+                placeHome();
+            }
+        }
+
+        private void placeHome()
+        {
+            GameState.CurrentPhase = EGamePhase.Expanding;
+
+            Entities.Add(new HomePlanet(
+                (int)((camera.target.X - camera.offset.X) + mouseCursor.Position.X),
+                (int)((camera.target.Y - camera.offset.Y) + mouseCursor.Position.Y),
+                10
+            ));
         }
 
         private void _updateCamera()
@@ -186,8 +228,8 @@ namespace Moonshot.Game.Scenes
             }
 
             // Keep within bounds
-            cursor.Position.X = MathUtil.Clamp(cursor.Position.X, minMap.X, maxMap.X);
-            cursor.Position.Y = MathUtil.Clamp(cursor.Position.Y, minMap.Y, maxMap.Y);
+            cursor.Position.X = MathUtil.Clamp(cursor.Position.X, MoonVars.mapMinimum.X, MoonVars.mapMaximum.X);
+            cursor.Position.Y = MathUtil.Clamp(cursor.Position.Y, MoonVars.mapMinimum.Y, MoonVars.mapMaximum.Y);
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Moonshot
         static void Main(string[] args)
         {
             var game = new MoonshotGame();
-
             game.Run();
         }
     }
