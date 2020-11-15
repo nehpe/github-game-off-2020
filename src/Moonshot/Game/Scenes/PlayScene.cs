@@ -1,5 +1,6 @@
 ﻿using Moonshot.Game.Entities;
 using Moonshot.Game.Generative;
+using Moonshot.UI;
 using Moonshot.Utilities;
 using Raylib_cs;
 using System;
@@ -12,9 +13,10 @@ namespace Moonshot.Game.Scenes
     {
         MoonshotGame g;
         List<IEntity> Entities = new List<IEntity>();
+        List<IEntity> GlobalEntities = new List<IEntity>();
+        List<UIEntity> UIElements = new List<UIEntity>();
         Camera2D camera;
         Cursor cursor;
-        Stars stars;
         MouseCursor mouseCursor;
 
         Font uiFont;
@@ -41,17 +43,21 @@ namespace Moonshot.Game.Scenes
             camera.rotation = 0f;
             camera.zoom = 1.0f;
 
-            // Create entities
-            //Entities.Add(new Planet(50, 50, 10));
-            //Entities.Add(new Planet(128, 112, 5));
-            //Entities.Add(new Planet(200, 200, 7));
-
             // Get uiFont
             uiFont = AssetManager.GetFont("alpha_beta");
             uiMeasurement = Raylib.MeasureTextEx(uiFont, "UI Here", uiFontSize, 1);
 
+            // Set up UI elements
+            var quarterWidth = MoonVars.RenderWidth / 4;
+            var elementHeight = 16;
+            UIElements.Add(new Label("Ener "+GameState.Energy, new Rectangle(0, 0, quarterWidth, elementHeight), Color.DARKGREEN));
+            UIElements.Add(new Label("Ship "+GameState.Ships , new Rectangle(quarterWidth, 0, quarterWidth, elementHeight), Color.DARKBLUE));
+            UIElements.Add(new Label("Fuel "+GameState.Fuel, new Rectangle(quarterWidth * 2, 0, quarterWidth, elementHeight), Color.DARKGREEN));
+            UIElements.Add(new Label("Metl "+GameState.Metal, new Rectangle(quarterWidth * 3, 0, quarterWidth, elementHeight), Color.DARKBLUE));
+
             mouseCursor = new MouseCursor();
-            stars = new Stars();
+
+            GlobalEntities.Add(new Stars());
         }
 
         public void Draw(RenderTexture2D target)
@@ -95,7 +101,18 @@ namespace Moonshot.Game.Scenes
 
         private void _drawGlobal()
         {
-            stars.Draw();
+            foreach (IEntity e in GlobalEntities)
+            {
+                e.Draw();
+            }
+        }
+
+        private void _updateGlobal()
+        {
+            foreach (IEntity e in GlobalEntities)
+            {
+                e.Update();
+            }
         }
 
         private void _drawIPUI()
@@ -117,6 +134,11 @@ namespace Moonshot.Game.Scenes
 
         private void _drawUI()
         {
+            foreach (UIEntity e in UIElements)
+            {
+                e.Draw();
+            }
+
             Raylib.DrawRectangle(
                 4, MoonVars.RenderHeight - 29,
                 MoonVars.RenderWidth - 8,
@@ -138,6 +160,8 @@ namespace Moonshot.Game.Scenes
                 uiFontSize, 1, Color.GRAY
             );
 
+
+
             // Raylib.DrawTextEx(
             //     uiFont, "(" + cursor.Position.X + ", " + cursor.Position.Y + ")",
             //     new Vector2(0, 0),
@@ -157,13 +181,14 @@ namespace Moonshot.Game.Scenes
         {
             _input();
             _updateCamera();
+
+            _updateGlobal();
             foreach (IEntity e in Entities)
             {
                 e.Update();
             }
 
             mouseCursor.Update();
-            stars.Update();
 
             if (GameState.CurrentPhase == EGamePhase.InitialPlacement)
             {
