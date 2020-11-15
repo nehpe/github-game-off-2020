@@ -1,4 +1,6 @@
 using System.Numerics;
+using Moonshot.Game.Entities;
+using Moonshot.Game.Generative;
 using Moonshot.Utilities;
 using Raylib_cs;
 
@@ -14,6 +16,10 @@ namespace Moonshot.Game.Scenes
         Color bgColor;
         Color fgColor;
 
+        StarBackground bg;
+
+        Stars stars;
+
         public LogoScene(MoonshotGame g)
         {
             this.g = g;
@@ -26,8 +32,12 @@ namespace Moonshot.Game.Scenes
 
             //TODO(np): colors should maybe be static / globally available
             bgColor = new Color(36, 36, 36, 255);
-            //fgColor = new Color(196, 196, 196, 255);
-            fgColor = Color.DARKBLUE;
+            fgColor = new Color(196, 196, 196, 255);
+            //fgColor = Color.DARKBLUE;
+
+            bg = new StarBackground();
+
+            stars = new Stars();
         }
 
         private void loadAssets()
@@ -45,6 +55,8 @@ namespace Moonshot.Game.Scenes
 
                 Raylib.ClearBackground(bgColor);
 
+                stars.Draw();
+
                 Raylib.DrawTextEx(font, "nehpe",
                     new Vector2(
                         Text.Center(MoonVars.RenderWidth, (int)textMeasure.X),
@@ -59,6 +71,8 @@ namespace Moonshot.Game.Scenes
 
         public void Update()
         {
+            stars.Update();
+
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
             {
                 g.NextScene(new MenuScene(this.g));

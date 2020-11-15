@@ -67,11 +67,24 @@ namespace Moonshot.Game.Scenes
 
                 Raylib.BeginMode2D(camera);
 
-                _draw();
+                //_draw();
+                switch (GameState.CurrentPhase)
+                {
+                    case EGamePhase.InitialPlacement:
+                        _drawInitialPlacementCamera();
+                        break;
+                }
 
                 Raylib.EndMode2D();
 
                 _drawUI();
+
+                switch (GameState.CurrentPhase)
+                {
+                    case EGamePhase.InitialPlacement:
+                        _drawIPUI();
+                        break;
+                }
 
                 Raylib.EndTextureMode();
             }
@@ -79,8 +92,25 @@ namespace Moonshot.Game.Scenes
             Raylib.EndDrawing();
         }
 
+        private void _drawIPUI()
+        {
+            Raylib.DrawTextEx(
+                uiFont, "Place your Home",
+                new Vector2(
+                    0, 0
+                ),
+                uiFontSize, 1, Color.DARKPURPLE
+            );
+        }
+
+        private void _drawInitialPlacementCamera()
+        {
+        }
+
         private void _drawUI()
         {
+
+
             Raylib.DrawRectangle(
                 4, MoonVars.RenderHeight - 29,
                 MoonVars.RenderWidth - 8,
@@ -102,11 +132,11 @@ namespace Moonshot.Game.Scenes
                 uiFontSize, 1, Color.GRAY
             );
 
-            Raylib.DrawTextEx(
-                uiFont, "(" + cursor.Position.X + ", " + cursor.Position.Y + ")",
-                new Vector2(0, 0),
-                uiFontSize, 1, Color.GREEN
-            );
+            // Raylib.DrawTextEx(
+            //     uiFont, "(" + cursor.Position.X + ", " + cursor.Position.Y + ")",
+            //     new Vector2(0, 0),
+            //     uiFontSize, 1, Color.GREEN
+            // );
         }
 
         private void _draw()

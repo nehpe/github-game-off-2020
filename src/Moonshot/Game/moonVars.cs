@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Reflection;
 
 namespace Moonshot.Game
@@ -18,5 +19,9 @@ namespace Moonshot.Game
         public static string Name = "Astrogate";
 
         public static bool DebugMode = false;
+
+        // Map
+        public static Vector2 mapMinimum = new Vector2(128, 112);
+        public static Vector2 mapMaximum = new Vector2(512, 512);
     }
 }
