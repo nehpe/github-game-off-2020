@@ -17,8 +17,7 @@ namespace Moonshot.Game.Entities
             this.pos = new Vector2(x, y);
             this.size = size;
 
-            rnd = new Random();
-            this.health = rnd.Next(this.size / 2, this.size * 2);
+            this.health = GameState.Rand.Next(this.size / 2, this.size * 2);
         }
 
         public void Draw()
