@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Numerics;
+using Moonshot.Game.Entities;
 using Moonshot.UI;
+using Moonshot.Utilities;
 using Raylib_cs;
 
 namespace Moonshot.Game.Scenes

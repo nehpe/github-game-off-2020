@@ -11,5 +11,9 @@ namespace Moonshot.Game.Scenes
                 e.Draw();
             }
         }
+
+        private void drawExpandingUI()
+        {
+        }
     }
 }

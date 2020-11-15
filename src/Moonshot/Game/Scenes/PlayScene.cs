@@ -1,7 +1,4 @@
 ﻿using Moonshot.Game.Entities;
-using Moonshot.Game.Generative;
-using Moonshot.UI;
-using Moonshot.Utilities;
 using Raylib_cs;
 using System.Collections.Generic;
 using System.Numerics;
@@ -55,6 +52,7 @@ namespace Moonshot.Game.Scenes
                 Raylib.BeginMode2D(camera);
 
                 drawGlobal();
+
                 switch (GameState.CurrentPhase)
                 {
                     case EGamePhase.InitialPlacement:
@@ -73,6 +71,9 @@ namespace Moonshot.Game.Scenes
                 {
                     case EGamePhase.InitialPlacement:
                         drawInitialPlacementUI();
+                        break;
+                    case EGamePhase.Expanding:
+                        drawExpandingUI();
                         break;
                 }
 
