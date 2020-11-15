@@ -3,7 +3,6 @@ using Moonshot.Game.Generative;
 using Moonshot.UI;
 using Moonshot.Utilities;
 using Raylib_cs;
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -50,10 +49,10 @@ namespace Moonshot.Game.Scenes
             // Set up UI elements
             var quarterWidth = MoonVars.RenderWidth / 4;
             var elementHeight = 16;
-            UIElements.Add(new Label("Ener "+GameState.Energy, new Rectangle(0, 0, quarterWidth, elementHeight), Color.DARKGREEN));
-            UIElements.Add(new Label("Ship "+GameState.Ships , new Rectangle(quarterWidth, 0, quarterWidth, elementHeight), Color.DARKBLUE));
-            UIElements.Add(new Label("Fuel "+GameState.Fuel, new Rectangle(quarterWidth * 2, 0, quarterWidth, elementHeight), Color.DARKGREEN));
-            UIElements.Add(new Label("Metl "+GameState.Metal, new Rectangle(quarterWidth * 3, 0, quarterWidth, elementHeight), Color.DARKBLUE));
+            UIElements.Add(new Label("Ener " + GameState.Energy, new Rectangle(0, 0, quarterWidth, elementHeight), Color.DARKGREEN));
+            UIElements.Add(new Label("Ship " + GameState.Ships, new Rectangle(quarterWidth, 0, quarterWidth, elementHeight), Color.DARKBLUE));
+            UIElements.Add(new Label("Fuel " + GameState.Fuel, new Rectangle(quarterWidth * 2, 0, quarterWidth, elementHeight), Color.DARKGREEN));
+            UIElements.Add(new Label("Metl " + GameState.Metal, new Rectangle(quarterWidth * 3, 0, quarterWidth, elementHeight), Color.DARKBLUE));
 
             mouseCursor = new MouseCursor();
 
@@ -159,8 +158,6 @@ namespace Moonshot.Game.Scenes
                 ),
                 uiFontSize, 1, Color.GRAY
             );
-
-
 
             // Raylib.DrawTextEx(
             //     uiFont, "(" + cursor.Position.X + ", " + cursor.Position.Y + ")",

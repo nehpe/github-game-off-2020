@@ -39,7 +39,6 @@ namespace Moonshot.UI
 
         public void Update()
         {
-            throw new System.NotImplementedException();
         }
     }
 }
