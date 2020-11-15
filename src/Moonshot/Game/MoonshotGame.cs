@@ -15,6 +15,9 @@ namespace Moonshot.Game
             //Raylib.SetTargetFPS(MoonVars.TargetFPS);
             Raylib.SetExitKey(KeyboardKey.KEY_Q);
 
+            //TODO(n): remove this later
+            Raylib.SetWindowPosition(2600, 28);
+
             this.target = Raylib.LoadRenderTexture(MoonVars.RenderWidth, MoonVars.RenderHeight);
             this.scene = new LogoScene(this);
         }

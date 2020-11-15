@@ -1,6 +1,8 @@
 ﻿using Moonshot.Game.Entities;
+using Moonshot.Game.Generative;
 using Moonshot.Utilities;
 using Raylib_cs;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -20,8 +22,6 @@ namespace Moonshot.Game.Scenes
         Vector2 uiMeasurement = Vector2.Zero;
 
         float speed = 50f;
-        Vector2 minMap;
-        Vector2 maxMap;
 
         public PlayScene(MoonshotGame g)
         {
@@ -42,21 +42,13 @@ namespace Moonshot.Game.Scenes
             camera.zoom = 1.0f;
 
             // Create entities
-            Entities.Add(new Planet(50, 50, 10));
-            Entities.Add(new Planet(128, 112, 5));
-            Entities.Add(new Planet(200, 200, 7));
+            //Entities.Add(new Planet(50, 50, 10));
+            //Entities.Add(new Planet(128, 112, 5));
+            //Entities.Add(new Planet(200, 200, 7));
 
             // Get uiFont
             uiFont = AssetManager.GetFont("alpha_beta");
             uiMeasurement = Raylib.MeasureTextEx(uiFont, "UI Here", uiFontSize, 1);
-
-            // Create bounding box
-            minMap = new Vector2(
-                MoonVars.RenderWidth / 2,
-                MoonVars.RenderHeight / 2
-            );
-
-            maxMap = new Vector2(512, 512);
 
             mouseCursor = new MouseCursor();
             stars = new Stars();
@@ -176,7 +168,6 @@ namespace Moonshot.Game.Scenes
             if (GameState.CurrentPhase == EGamePhase.InitialPlacement)
             {
                 checkForPlacement();
-
             }
         }
 
@@ -185,7 +176,15 @@ namespace Moonshot.Game.Scenes
             if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON))
             {
                 placeHome();
+                generatePlanets();
             }
+        }
+
+        private void generatePlanets()
+        {
+            var planets = PlanetGeneration.Generate();
+
+            Entities.AddRange(planets);
         }
 
         private void placeHome()
