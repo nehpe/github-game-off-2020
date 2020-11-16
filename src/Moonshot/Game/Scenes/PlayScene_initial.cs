@@ -1,6 +1,7 @@
 using System.Numerics;
 using Moonshot.Game.Entities;
 using Moonshot.Game.Generative;
+using Nehpenthe;
 using Raylib_cs;
 
 namespace Moonshot.Game.Scenes
@@ -35,11 +36,18 @@ namespace Moonshot.Game.Scenes
         {
             GameState.CurrentPhase = EGamePhase.Expanding;
 
+            var worldPos = new Vector2i(MouseUtil.ScreenToWorldPosition(mouseCursor.Position, camera));
+
             Entities.Add(new HomePlanet(
+                worldPos.X,
+                worldPos.Y,
+                10
+            ));
+            /*Entities.Add(new HomePlanet(
                 (int)((camera.target.X - camera.offset.X) + mouseCursor.Position.X),
                 (int)((camera.target.Y - camera.offset.Y) + mouseCursor.Position.Y),
                 10
-            ));
+            ));*/
         }
 
         private void checkForPlacement()

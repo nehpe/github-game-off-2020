@@ -98,6 +98,7 @@ namespace Moonshot.Game.Scenes
             }
             else if (GameState.CurrentPhase == EGamePhase.Expanding)
             {
+                checkForHover();
                 checkForAttack();
             }
         }

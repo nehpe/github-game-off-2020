@@ -1,4 +1,5 @@
 using System;
+using Nehpenthe;
 using Moonshot.Game.Entities;
 using Raylib_cs;
 
@@ -18,6 +19,29 @@ namespace Moonshot.Game.Scenes
         {
         }
 
+        private void checkForHover()
+        {
+            var worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, camera);
+            Planet p;
+
+            foreach (IEntity e in Entities)
+            {
+                if (e is Planet)
+                {
+                    p = (Planet)e;
+
+                    if (p.Collides(worldPos))
+                    {
+                        p.selected = true;
+                    }
+                    else
+                    {
+                        p.selected = false;
+                    }
+                }
+            }
+        }
+
         private void checkForAttack()
         {
             if (!Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
@@ -25,15 +49,18 @@ namespace Moonshot.Game.Scenes
 
             Console.WriteLine("Checking for attack");
             Planet p;
+
+            //TODO mousepos needs to be changes to screen pos
+            var worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, camera);
+            Console.WriteLine(worldPos);
             foreach (IEntity e in Entities)
             {
-                //TODO mousepos needs to be changes to screen pos
-                var mousePos = Raylib.GetMousePosition();
+
                 if (e is Planet)
                 {
                     p = (Planet)e;
 
-                    if (p.Collides(mousePos))
+                    if (p.Collides(worldPos))
                     {
                         Console.WriteLine("Collided");
                     }

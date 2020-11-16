@@ -5,7 +5,7 @@ namespace Moonshot.Game.Entities
 {
     public class Planet : IEntity
     {
-        bool selected = false;
+        public bool selected = false;
         Vector2 pos;
         int size;
         int health;
