@@ -12,6 +12,10 @@ namespace Moonshot.Game.Scenes
         List<UIEntity> UIElements = new List<UIEntity>();
         MouseCursor mouseCursor;
 
+        Font uiFont;
+        int uiFontSize = 12;
+        Vector2 uiMeasurement = Vector2.Zero;
+
         private void initUI()
         {
             mouseCursor = new MouseCursor();

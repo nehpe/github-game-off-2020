@@ -12,10 +12,6 @@ namespace Moonshot.Game.Scenes
         Camera2D camera;
         Cursor cursor;
 
-        Font uiFont;
-        int uiFontSize = 12;
-        Vector2 uiMeasurement = Vector2.Zero;
-
         float speed = 100f;
 
         public PlayScene(MoonshotGame g)
