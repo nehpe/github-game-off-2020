@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Numerics;
 
 namespace Nehpenthe
 {
@@ -11,6 +11,12 @@ namespace Nehpenthe
         {
             this.X = 0;
             this.Y = 0;
+        }
+
+        public Vector2i(Vector2 v)
+        {
+            this.X = (int)v.X;
+            this.Y = (int)v.Y;
         }
 
         public Vector2i(int x, int y)
