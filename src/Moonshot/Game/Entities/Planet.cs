@@ -57,5 +57,14 @@ namespace Moonshot.Game.Entities
         {
 
         }
+
+        public bool Collides(Vector2 mousePos)
+        {
+            if (Raylib.CheckCollisionPointCircle(mousePos, pos, size))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
