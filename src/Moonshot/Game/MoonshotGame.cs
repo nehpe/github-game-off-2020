@@ -6,8 +6,8 @@ namespace Moonshot.Game
 {
     public class MoonshotGame
     {
-        IScene scene;
-        RenderTexture2D target;
+        private IScene _scene;
+        private readonly RenderTexture2D _target;
 
         public MoonshotGame()
         {
@@ -18,19 +18,19 @@ namespace Moonshot.Game
             //TODO(n): remove this later
             Raylib.SetWindowPosition(2600, 28);
 
-            this.target = Raylib.LoadRenderTexture(MoonVars.RenderWidth, MoonVars.RenderHeight);
-            this.scene = new LogoScene(this);
+            this._target = Raylib.LoadRenderTexture(MoonVars.RenderWidth, MoonVars.RenderHeight);
+            this._scene = new LogoScene(this);
         }
 
         public void Run()
         {
             while (!Raylib.WindowShouldClose())
             {
-                this.scene.Update();
+                this._scene.Update();
 
-                this.scene.Draw(this.target);
+                this._scene.Draw(this._target);
 
-                Raylib.DrawTexturePro(this.target.texture,
+                Raylib.DrawTexturePro(this._target.texture,
                     new Rectangle(0, 0, MoonVars.RenderWidth, -MoonVars.RenderHeight),
                     new Rectangle(0, 0, MoonVars.ScreenWidth, MoonVars.ScreenHeight),
                     new Vector2(0, 0), 0, Color.WHITE
@@ -40,7 +40,7 @@ namespace Moonshot.Game
 
         public void NextScene(IScene scene)
         {
-            this.scene = scene;
+            this._scene = scene;
         }
 
         ~MoonshotGame()

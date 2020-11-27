@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Numerics;
 using Nehpenthe;
 using Moonshot.Game.Entities;
 using Raylib_cs;
@@ -7,7 +9,7 @@ namespace Moonshot.Game.Scenes
 {
     public partial class PlayScene
     {
-        private void drawExpandingCamera()
+        private void DrawExpandingCamera()
         {
             foreach (IEntity e in Entities)
             {
@@ -15,34 +17,27 @@ namespace Moonshot.Game.Scenes
             }
         }
 
-        private void drawExpandingUI()
+        private void DrawExpandingUi()
         {
         }
 
-        private void checkForHover()
+        private void CheckForHover()
         {
-            var worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, camera);
-            Planet p;
-
-            foreach (IEntity e in Entities)
+            Vector2 worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, _camera);
+            foreach (Planet p in Entities.OfType<Planet>())
             {
-                if (e is Planet)
+                if (p.Collides(worldPos))
                 {
-                    p = (Planet)e;
-
-                    if (p.Collides(worldPos))
-                    {
-                        p.selected = true;
-                    }
-                    else
-                    {
-                        p.selected = false;
-                    }
+                    p.selected = true;
+                }
+                else
+                {
+                    p.selected = false;
                 }
             }
         }
 
-        private void checkForAttack()
+        private void CheckForAttack()
         {
             if (!Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
                 return;
@@ -50,22 +45,14 @@ namespace Moonshot.Game.Scenes
             Console.WriteLine("Checking for attack");
             Planet p;
 
-            //TODO mousepos needs to be changes to screen pos
-            var worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, camera);
+            Vector2 worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, _camera);
             Console.WriteLine(worldPos);
-            foreach (IEntity e in Entities)
+            foreach (Planet e in Entities.OfType<Planet>())
             {
-
-                if (e is Planet)
+                if (e.Collides(worldPos))
                 {
-                    p = (Planet)e;
-
-                    if (p.Collides(worldPos))
-                    {
-                        Console.WriteLine("Collided");
-                    }
+                    Console.WriteLine("Collided");
                 }
-
             }
         }
     }

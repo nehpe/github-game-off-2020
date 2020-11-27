@@ -1,4 +1,5 @@
-﻿using Moonshot.Game.Entities;
+﻿using System;
+using Moonshot.Game.Entities;
 using Raylib_cs;
 using System.Collections.Generic;
 using System.Numerics;
@@ -9,8 +10,8 @@ namespace Moonshot.Game.Scenes
     {
         MoonshotGame g;
         List<IEntity> Entities = new List<IEntity>();
-        Camera2D camera;
-        Cursor cursor;
+        private Camera2D _camera;
+        private Cursor _cursor;
 
         float speed = 100f;
 
@@ -18,23 +19,25 @@ namespace Moonshot.Game.Scenes
         {
             this.g = g;
 
-            init();
-            initGlobal();
+            Init();
+            InitGlobal();
             initUI();
-            initPlacement();
+            InitPlacement();
         }
 
-        private void init()
+        private void Init()
         {
             // Create cursor
-            cursor = new Cursor();
+            _cursor = new Cursor();
 
             // Create camera
-            camera = new Camera2D();
-            camera.target = cursor.Position;
-            camera.offset = new Vector2(MoonVars.RenderWidth / 2, MoonVars.RenderHeight / 2);
-            camera.rotation = 0f;
-            camera.zoom = 1.0f;
+            _camera = new Camera2D
+            {
+                target = _cursor.Position,
+                offset = new Vector2(MoonVars.RenderWidth / 2, MoonVars.RenderHeight / 2),
+                rotation = 0f,
+                zoom = 1.0f
+            };
         }
 
         public void Draw(RenderTexture2D target)
@@ -45,17 +48,17 @@ namespace Moonshot.Game.Scenes
 
                 Raylib.ClearBackground(new Color(36, 36, 36, 255));
 
-                Raylib.BeginMode2D(camera);
+                Raylib.BeginMode2D(_camera);
 
-                drawGlobal();
+                DrawGlobal();
 
                 switch (GameState.CurrentPhase)
                 {
                     case EGamePhase.InitialPlacement:
-                        drawInitialPlacementCamera();
+                        DrawInitialPlacementCamera();
                         break;
                     case EGamePhase.Expanding:
-                        drawExpandingCamera();
+                        DrawExpandingCamera();
                         break;
                 }
 
@@ -66,11 +69,13 @@ namespace Moonshot.Game.Scenes
                 switch (GameState.CurrentPhase)
                 {
                     case EGamePhase.InitialPlacement:
-                        drawInitialPlacementUI();
+                        DrawInitialPlacementUi();
                         break;
                     case EGamePhase.Expanding:
-                        drawExpandingUI();
+                        DrawExpandingUi();
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 Raylib.EndTextureMode();
@@ -81,10 +86,10 @@ namespace Moonshot.Game.Scenes
 
         public void Update()
         {
-            input();
-            updateCamera();
+            Input();
+            UpdateCamera();
 
-            updateGlobal();
+            UpdateGlobal();
             foreach (IEntity e in Entities)
             {
                 e.Update();
@@ -92,14 +97,17 @@ namespace Moonshot.Game.Scenes
 
             mouseCursor.Update();
 
-            if (GameState.CurrentPhase == EGamePhase.InitialPlacement)
+            switch (GameState.CurrentPhase)
             {
-                checkForPlacement();
-            }
-            else if (GameState.CurrentPhase == EGamePhase.Expanding)
-            {
-                checkForHover();
-                checkForAttack();
+                case EGamePhase.InitialPlacement:
+                    CheckForPlacement();
+                    break;
+                case EGamePhase.Expanding:
+                    CheckForHover();
+                    CheckForAttack();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

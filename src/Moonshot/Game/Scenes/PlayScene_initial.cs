@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using Moonshot.Game.Entities;
 using Moonshot.Game.Generative;
@@ -8,11 +9,11 @@ namespace Moonshot.Game.Scenes
 {
     public partial class PlayScene
     {
-        private void initPlacement() { }
+        private void InitPlacement() { }
 
-        private void drawInitialPlacementCamera() { }
+        private void DrawInitialPlacementCamera() { }
 
-        private void drawInitialPlacementUI()
+        private void DrawInitialPlacementUi()
         {
             Raylib.DrawTextEx(
                 uiFont, "Place your Home",
@@ -25,38 +26,32 @@ namespace Moonshot.Game.Scenes
             mouseCursor.Draw();
         }
 
-        private void generatePlanets()
+        private void GeneratePlanets()
         {
-            var planets = PlanetGeneration.Generate();
+            List<Planet> planets = PlanetGeneration.Generate();
 
             Entities.AddRange(planets);
         }
 
-        private void placeHome()
+        private void PlaceHome()
         {
             GameState.CurrentPhase = EGamePhase.Expanding;
 
-            var worldPos = new Vector2i(MouseUtil.ScreenToWorldPosition(mouseCursor.Position, camera));
+            Vector2i worldPos = new Vector2i(MouseUtil.ScreenToWorldPosition(mouseCursor.Position, _camera));
 
             Entities.Add(new HomePlanet(
                 worldPos.X,
                 worldPos.Y,
                 10
             ));
-            /*Entities.Add(new HomePlanet(
-                (int)((camera.target.X - camera.offset.X) + mouseCursor.Position.X),
-                (int)((camera.target.Y - camera.offset.Y) + mouseCursor.Position.Y),
-                10
-            ));*/
         }
 
-        private void checkForPlacement()
+        private void CheckForPlacement()
         {
-            if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON))
-            {
-                placeHome();
-                generatePlanets();
-            }
+            if (!Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON)) return;
+            
+            PlaceHome();
+            GeneratePlanets();
         }
     }
 }

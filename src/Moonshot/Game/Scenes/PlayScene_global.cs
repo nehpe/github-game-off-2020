@@ -10,45 +10,45 @@ namespace Moonshot.Game.Scenes
     {
         List<IEntity> GlobalEntities = new List<IEntity>();
 
-        private void initGlobal()
+        private void InitGlobal()
         {
             GlobalEntities.Add(new Stars());
         }
 
-        private void updateCamera()
+        private void UpdateCamera()
         {
-            camera.offset = new Vector2(MoonVars.RenderWidth / 2, MoonVars.RenderHeight / 2);
-            camera.target = cursor.Position;
+            _camera.offset = new Vector2(MoonVars.RenderWidth / 2, MoonVars.RenderHeight / 2);
+            _camera.target = _cursor.Position;
         }
 
-        private void input()
+        private void Input()
         {
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
             {
-                cursor.Position.X -= speed * Raylib.GetFrameTime();
+                _cursor.Position.X -= speed * Raylib.GetFrameTime();
             }
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
             {
-                cursor.Position.X += speed * Raylib.GetFrameTime();
+                _cursor.Position.X += speed * Raylib.GetFrameTime();
             }
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
             {
-                cursor.Position.Y -= speed * Raylib.GetFrameTime();
+                _cursor.Position.Y -= speed * Raylib.GetFrameTime();
             }
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
             {
-                cursor.Position.Y += speed * Raylib.GetFrameTime();
+                _cursor.Position.Y += speed * Raylib.GetFrameTime();
             }
 
             // Keep within bounds
-            cursor.Position.X = MathUtil.Clamp(cursor.Position.X, MoonVars.mapMinimum.X, MoonVars.mapMaximum.X);
-            cursor.Position.Y = MathUtil.Clamp(cursor.Position.Y, MoonVars.mapMinimum.Y, MoonVars.mapMaximum.Y);
+            _cursor.Position.X = MathUtil.Clamp(_cursor.Position.X, MoonVars.mapMinimum.X, MoonVars.mapMaximum.X);
+            _cursor.Position.Y = MathUtil.Clamp(_cursor.Position.Y, MoonVars.mapMinimum.Y, MoonVars.mapMaximum.Y);
         }
 
-        private void drawGlobal()
+        private void DrawGlobal()
         {
             foreach (IEntity e in GlobalEntities)
             {
@@ -56,7 +56,7 @@ namespace Moonshot.Game.Scenes
             }
         }
 
-        private void updateGlobal()
+        private void UpdateGlobal()
         {
             foreach (IEntity e in GlobalEntities)
             {
