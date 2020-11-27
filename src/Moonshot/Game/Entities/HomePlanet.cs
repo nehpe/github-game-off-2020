@@ -6,27 +6,27 @@ namespace Moonshot.Game.Entities
     public class HomePlanet : IEntity
     {
         //bool selected = false;
-        Vector2 pos;
+        public Vector2 Pos;
         int size;
 
         public HomePlanet(int x, int y, int size)
         {
-            this.pos = new Vector2(x, y);
+            this.Pos = new Vector2(x, y);
             this.size = size;
         }
 
         public void Draw()
         {
             Raylib.DrawCircle(
-                (int)pos.X,
-                (int)pos.Y,
+                (int)Pos.X,
+                (int)Pos.Y,
                 size,
                 Color.DARKPURPLE
             );
 
             Raylib.DrawCircleLines(
-                (int)pos.X,
-                (int)pos.Y,
+                (int)Pos.X,
+                (int)Pos.Y,
                 size + 2,
                 Color.PURPLE
             );

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Nehpenthe;
@@ -11,9 +12,24 @@ namespace Moonshot.Game.Scenes
     {
         private void DrawExpandingCamera()
         {
+            List<IEntity> toRemove = new List<IEntity>();
+            
             foreach (IEntity e in Entities)
             {
                 e.Draw();
+
+                if (e is Ship)
+                {
+                    if (((Ship) e).Destroyed)
+                    {
+                        toRemove.Add(e);
+                    }
+                }
+            }
+
+            foreach (IEntity r in toRemove)
+            {
+                Entities.Remove(r);
             }
         }
 
@@ -26,14 +42,7 @@ namespace Moonshot.Game.Scenes
             Vector2 worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, _camera);
             foreach (Planet p in Entities.OfType<Planet>())
             {
-                if (p.Collides(worldPos))
-                {
-                    p.selected = true;
-                }
-                else
-                {
-                    p.selected = false;
-                }
+                p.Selected = p.Collides(worldPos);
             }
         }
 
@@ -43,16 +52,27 @@ namespace Moonshot.Game.Scenes
                 return;
 
             Console.WriteLine("Checking for attack");
-            Planet p;
 
             Vector2 worldPos = MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, _camera);
             Console.WriteLine(worldPos);
-            foreach (Planet e in Entities.OfType<Planet>())
+            foreach (Planet p in Entities.OfType<Planet>())
             {
-                if (e.Collides(worldPos))
-                {
-                    Console.WriteLine("Collided");
-                }
+                if (!p.Collides(worldPos)) continue;
+                Attack(p);
+                return;
+            }
+        }
+
+        private void Attack(Planet p)
+        {
+            int shipsToAttack = GameState.Ships / 2;
+            GameState.Ships -= shipsToAttack;
+
+            HomePlanet hp = Entities.OfType<HomePlanet>().First();
+
+            for (int i = 0; i < shipsToAttack; i++)
+            {
+                Entities.Add(new Ship(hp.Pos, p));
             }
         }
     }

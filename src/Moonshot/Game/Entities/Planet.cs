@@ -5,15 +5,15 @@ namespace Moonshot.Game.Entities
 {
     public class Planet : IEntity
     {
-        public bool selected = false;
-        Vector2 pos;
+        public bool Selected = false;
+        public Vector2 Pos;
         int size;
         int health;
         EPlanetType type;
 
         public Planet(int x, int y, int size)
         {
-            this.pos = new Vector2(x, y);
+            this.Pos = new Vector2(x, y);
             this.size = size;
 
             this.health = GameState.Rand.Next(this.size / 2, this.size * 2);
@@ -23,10 +23,10 @@ namespace Moonshot.Game.Entities
 
         public void Draw()
         {
-            Raylib.DrawCircle((int)pos.X, (int)pos.Y, size, this.GetColor());
-            Raylib.DrawText(this.health.ToString(), (int)pos.X - (2 * this.health.ToString().Length), (int)pos.Y - 4, 6, this.GetHighlightColor());
-            if (selected)
-                Raylib.DrawCircleLines((int)pos.X, (int)pos.Y, size + 2, this.GetHighlightColor());
+            Raylib.DrawCircle((int)Pos.X, (int)Pos.Y, size, this.GetColor());
+            Raylib.DrawText(this.health.ToString(), (int)Pos.X - (2 * this.health.ToString().Length), (int)Pos.Y - 4, 6, this.GetHighlightColor());
+            if (Selected)
+                Raylib.DrawCircleLines((int)Pos.X, (int)Pos.Y, size + 2, this.GetHighlightColor());
         }
 
         private Color GetColor()
@@ -53,6 +53,11 @@ namespace Moonshot.Game.Entities
             }
         }
 
+        public void Hit()
+        {
+            health--;
+        }
+
         public void Update()
         {
 
@@ -60,11 +65,7 @@ namespace Moonshot.Game.Entities
 
         public bool Collides(Vector2 mousePos)
         {
-            if (Raylib.CheckCollisionPointCircle(mousePos, pos, size))
-            {
-                return true;
-            }
-            return false;
+            return Raylib.CheckCollisionPointCircle(mousePos, Pos, size);
         }
     }
 }

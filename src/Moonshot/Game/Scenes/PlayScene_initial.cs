@@ -22,14 +22,12 @@ namespace Moonshot.Game.Scenes
                 ),
                 uiFontSize, 1, Color.DARKPURPLE
             );
-
             mouseCursor.Draw();
         }
 
         private void GeneratePlanets()
         {
             List<Planet> planets = PlanetGeneration.Generate();
-
             Entities.AddRange(planets);
         }
 
