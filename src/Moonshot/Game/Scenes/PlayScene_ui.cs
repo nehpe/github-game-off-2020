@@ -9,38 +9,30 @@ namespace Moonshot.Game.Scenes
 {
     public partial class PlayScene
     {
-        List<UIEntity> UIElements = new List<UIEntity>();
-        MouseCursor mouseCursor;
-
-        Font uiFont;
-        int uiFontSize = 12;
-        Vector2 uiMeasurement = Vector2.Zero;
+        private readonly List<UIEntity> _uiElements = new List<UIEntity>();
+        private Font _uiFont;
+        private const int UiFontSize = 12;
+        private Vector2 _uiMeasurement = Vector2.Zero;
+        private MouseCursor _mouseCursor;
 
         private void InitUi()
         {
-            mouseCursor = new MouseCursor();
+            _mouseCursor = new MouseCursor();
 
-            //TODO(np): these need to be addressable for later updating
             // Set up UI elements
-            int quarterWidth = MoonVars.RenderWidth / 4;
-            int elementHeight = 16;
-            UIElements.Add(
-                new Label(
-                    "Ener " + GameState.Energy,
-                    new Rectangle(0, 0, quarterWidth, elementHeight),
-                    Color.GREEN,
-                    (() => "Ener " + GameState.Energy)
-                )
-            );
-            UIElements.Add(
+            const int quarterWidth = MoonVars.RenderWidth / 4;
+            const int elementHeight = 16;
+            
+            _uiElements.Add(
                 new Label(
                     "Ship " + GameState.Ships,
-                    new Rectangle(quarterWidth, 0, quarterWidth, elementHeight),
+                    new Rectangle(0, 0, quarterWidth, elementHeight),
                     Color.BLUE,
                     (() => "Ship " + GameState.Ships)
                 )
             );
-            UIElements.Add(
+            
+            _uiElements.Add(
                 new Label(
                     "Fuel " + GameState.Fuel,
                     new Rectangle(quarterWidth * 2, 0, quarterWidth, elementHeight),
@@ -48,7 +40,8 @@ namespace Moonshot.Game.Scenes
                     (() => "Fuel " + GameState.Fuel)
                 )
             );
-            UIElements.Add(
+            
+            _uiElements.Add(
                 new Label(
                     "Metl " + GameState.Metal,
                     new Rectangle(quarterWidth * 3, 0, quarterWidth, elementHeight),
@@ -58,13 +51,13 @@ namespace Moonshot.Game.Scenes
             );
 
             // Get uiFont
-            uiFont = AssetManager.GetFont("alpha_beta");
-            uiMeasurement = Raylib.MeasureTextEx(uiFont, "UI Here", uiFontSize, 1);
+            _uiFont = AssetManager.GetFont("alpha_beta");
+            _uiMeasurement = Raylib.MeasureTextEx(_uiFont, "UI Here", UiFontSize, 1);
         }
 
         private void DrawGlobalUi()
         {
-            foreach (UIEntity e in UIElements)
+            foreach (UIEntity e in _uiElements)
             {
                 e.Draw();
             }
@@ -83,18 +76,18 @@ namespace Moonshot.Game.Scenes
             );
 
             Raylib.DrawTextEx(
-                uiFont, "UI Here",
+                _uiFont, "UI Here",
                 new Vector2(
-                    Text.Center(MoonVars.RenderWidth, (int) uiMeasurement.X),
-                    MoonVars.RenderHeight - 18 - Text.Center(25, (int) uiMeasurement.Y)
+                    Text.Center(MoonVars.RenderWidth, (int) _uiMeasurement.X),
+                    MoonVars.RenderHeight - 18 - Text.Center(25, (int) _uiMeasurement.Y)
                 ),
-                uiFontSize, 1, Color.GRAY
+                UiFontSize, 1, Color.GRAY
             );
         }
 
         private void UpdateGlobalUi()
         {
-            foreach (UIEntity e in UIElements)
+            foreach (UIEntity e in _uiElements)
             {
                 e.Update();
             }

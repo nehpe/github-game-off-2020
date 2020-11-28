@@ -60,6 +60,8 @@ namespace Moonshot.Game.Scenes
                     case EGamePhase.Expanding:
                         DrawExpandingCamera();
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 Raylib.EndMode2D();
@@ -95,7 +97,7 @@ namespace Moonshot.Game.Scenes
                 e.Update();
             }
 
-            mouseCursor.Update();
+            _mouseCursor.Update();
 
             switch (GameState.CurrentPhase)
             {

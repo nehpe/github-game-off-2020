@@ -12,11 +12,11 @@ namespace Moonshot.UI
         Font Fon;
         Texture2D Icon;
 
-        public delegate string onUpdate();
+        public delegate string OnUpdate();
 
-        private onUpdate updateFunc;
+        private OnUpdate updateFunc;
 
-        public Label(string t, Rectangle r, Color c, onUpdate func)
+        public Label(string t, Rectangle r, Color c, OnUpdate func)
         {
             this.Text = t;
             this.Box = r;

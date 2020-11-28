@@ -16,13 +16,13 @@ namespace Moonshot.Game.Scenes
         private void DrawInitialPlacementUi()
         {
             Raylib.DrawTextEx(
-                uiFont, "Place your Home",
+                _uiFont, "Place your Home",
                 new Vector2(
                     4, 16
                 ),
-                uiFontSize, 1, Color.DARKPURPLE
+                UiFontSize, 1, Color.DARKPURPLE
             );
-            mouseCursor.Draw();
+            _mouseCursor.Draw();
         }
 
         private void GeneratePlanets()
@@ -35,7 +35,7 @@ namespace Moonshot.Game.Scenes
         {
             GameState.CurrentPhase = EGamePhase.Expanding;
 
-            Vector2i worldPos = new Vector2i(MouseUtil.ScreenToWorldPosition(mouseCursor.Position, _camera));
+            Vector2i worldPos = new Vector2i(MouseUtil.ScreenToWorldPosition(_mouseCursor.Position, _camera));
 
             Entities.Add(new HomePlanet(
                 worldPos.X,
