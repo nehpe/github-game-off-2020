@@ -58,8 +58,8 @@ namespace Moonshot.Game.Scenes
                         DrawInitialPlacementCamera();
                         break;
                     case EGamePhase.Expanding:
-                        DrawExpandingCamera();
                         DrawConnections();
+                        DrawExpandingCamera();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -110,6 +110,7 @@ namespace Moonshot.Game.Scenes
                     CheckForAttack();
                     CheckForSelection();
                     CheckForConnection();
+                    BuildShips();
                     ReplacePlanets();
                     UpdateConnections();
                     UpdateGlobalUi();

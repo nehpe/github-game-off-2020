@@ -47,7 +47,7 @@ namespace Moonshot.Game.Scenes
         private void CheckForPlacement()
         {
             if (!Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON)) return;
-            
+
             PlaceHome();
             GeneratePlanets();
         }

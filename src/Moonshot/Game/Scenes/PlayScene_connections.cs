@@ -38,11 +38,7 @@ namespace Moonshot.Game.Scenes
         private void AddConnection(OwnedPlanet op)
         {
             HomePlanet hp = GetHomePlanet();
-            _connectedPlanets.Add(
-                new Connection(
-                    hp.Pos, op.Position, op.Type
-                    )
-                );
+            _connectedPlanets.Add(new Connection(hp.Pos, op.Position, op.Type));
         }
 
         private void DrawConnections()
@@ -52,6 +48,16 @@ namespace Moonshot.Game.Scenes
             foreach (Connection c in _connectedPlanets)
             {
                 c.Draw();
+            }
+        }
+
+        private void BuildShips()
+        {
+            if (GameState.Fuel >= 10 && GameState.Metal >= 5)
+            {
+                GameState.Fuel -= 10;
+                GameState.Metal -= 5;
+                GameState.Ships++;
             }
         }
     }
