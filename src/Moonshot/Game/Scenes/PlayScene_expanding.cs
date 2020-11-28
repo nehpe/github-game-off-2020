@@ -11,7 +11,6 @@ namespace Moonshot.Game.Scenes
     public partial class PlayScene
     {
         private OwnedPlanet _currentSelection = null;
-        private List<Connection> _connectedPlanets = new List<Connection>();
 
         private void DrawExpandingCamera()
         {
@@ -24,7 +23,7 @@ namespace Moonshot.Game.Scenes
                 //TODO(np): this is ugly, fix it
                 if (e is Ship)
                 {
-                    if (((Ship) e).Destroyed)
+                    if (((Ship)e).Destroyed)
                     {
                         toRemove.Add(e);
                     }
@@ -51,7 +50,7 @@ namespace Moonshot.Game.Scenes
             {
                 if (!p.Destroyed) continue;
                 planetsToRemove.Add(p);
-                planetsToAdd.Add(new OwnedPlanet((int) p.Position.X, (int) p.Position.Y, p.Size, p.Type));
+                planetsToAdd.Add(new OwnedPlanet((int)p.Position.X, (int)p.Position.Y, p.Size, p.Type));
             }
 
             foreach (Planet p in planetsToRemove)
@@ -126,24 +125,6 @@ namespace Moonshot.Game.Scenes
             return Entities.OfType<HomePlanet>().FirstOrDefault();
         }
 
-        private void CheckForConnection()
-        {
-            if (!Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
-                return;
-
-            Vector2 worldPos =
-                MouseUtil.ScreenToWorldPosition(Raylib.GetMousePosition() / MoonVars.RenderScale, _camera);
-
-            HomePlanet p = GetHomePlanet();
-            if (p.Collides(worldPos))
-            {
-                if (_currentSelection != null) AddConnection(_currentSelection);
-
-                ClearSelection();
-                return;
-            }
-        }
-
         private void Attack(Planet p)
         {
             int shipsToAttack = p.Health > GameState.Ships ? GameState.Ships : p.Health;
@@ -156,5 +137,6 @@ namespace Moonshot.Game.Scenes
                 Entities.Add(new Ship(hp.Pos, p));
             }
         }
+
     }
 }

@@ -111,30 +111,11 @@ namespace Moonshot.Game.Scenes
                     CheckForSelection();
                     CheckForConnection();
                     ReplacePlanets();
+                    UpdateConnections();
                     UpdateGlobalUi();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private void AddConnection(OwnedPlanet op)
-        {
-            HomePlanet hp = GetHomePlanet();
-            _connectedPlanets.Add(
-                new Connection(
-                    hp.Pos, op.Position, op.Type
-                    )
-                );
-        }
-
-        private void DrawConnections()
-        {
-            HomePlanet hp = GetHomePlanet();
-            
-            foreach (Connection c in _connectedPlanets)
-            {
-                c.Draw();
             }
         }
     }
