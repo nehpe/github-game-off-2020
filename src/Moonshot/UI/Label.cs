@@ -12,14 +12,19 @@ namespace Moonshot.UI
         Font Fon;
         Texture2D Icon;
 
-        public Label(string t, Rectangle r, Color c)
+        public delegate string onUpdate();
+
+        private onUpdate updateFunc;
+
+        public Label(string t, Rectangle r, Color c, onUpdate func)
         {
             this.Text = t;
             this.Box = r;
             this.Col = c;
             this.Fon = AssetManager.GetFont("pixantiqua");
+            this.updateFunc = func;
 
-            var image = Raylib.GenImageColor(8, 8, Color.BLACK);
+            Image image = Raylib.GenImageColor(8, 8, Color.BLACK);
             this.Icon = Raylib.LoadTextureFromImage(image);
         }
 
@@ -39,6 +44,7 @@ namespace Moonshot.UI
 
         public void Update()
         {
+            this.Text = updateFunc();
         }
     }
 }

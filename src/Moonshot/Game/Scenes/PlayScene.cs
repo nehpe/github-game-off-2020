@@ -21,7 +21,7 @@ namespace Moonshot.Game.Scenes
 
             Init();
             InitGlobal();
-            initUI();
+            InitUi();
             InitPlacement();
         }
 
@@ -64,7 +64,7 @@ namespace Moonshot.Game.Scenes
 
                 Raylib.EndMode2D();
 
-                drawGlobalUI();
+                DrawGlobalUi();
 
                 switch (GameState.CurrentPhase)
                 {
@@ -106,6 +106,7 @@ namespace Moonshot.Game.Scenes
                     CheckForHover();
                     CheckForAttack();
                     ReplacePlanets();
+                    UpdateGlobalUi();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

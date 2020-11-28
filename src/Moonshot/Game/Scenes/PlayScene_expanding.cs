@@ -18,6 +18,7 @@ namespace Moonshot.Game.Scenes
             {
                 e.Draw();
 
+                //TODO(np): this is ugly, fix it
                 if (e is Ship)
                 {
                     if (((Ship) e).Destroyed)
@@ -27,8 +28,6 @@ namespace Moonshot.Game.Scenes
                 }
             }
 
-            Console.WriteLine(Entities.OfType<Ship>().Count());
-            
             RemoveDestroyedShips(toRemove);
         }
 
