@@ -7,35 +7,38 @@ namespace Moonshot.Game.Entities
     {
         public Vector2 Position;
         private int Size;
-        private readonly EPlanetType _type;
-        
+        public readonly EPlanetType Type;
+
+        public bool Selected = false;
+
         public OwnedPlanet(int x, int y, int size, EPlanetType type)
         {
             this.Position = new Vector2(x, y);
             this.Size = size;
-            this._type = type;
+            this.Type = type;
         }
-        
+
         public void Draw()
         {
             Raylib.DrawCircle(
                 (int) Position.X,
                 (int) Position.Y,
-                Size, 
+                Size,
                 this.GetColor()
             );
-            
-            Raylib.DrawCircleLines(
-                (int) Position.X, 
-                (int) Position.Y, 
-                Size + 2,
-                this.GetHighlightColor()
-            );
+
+            if (Selected)
+                Raylib.DrawCircleLines(
+                    (int) Position.X,
+                    (int) Position.Y,
+                    Size + 2,
+                    this.GetHighlightColor()
+                );
         }
 
         private Color GetColor()
         {
-            if (this._type == EPlanetType.Fuel)
+            if (this.Type == EPlanetType.Fuel)
             {
                 return Color.GREEN;
             }
@@ -43,12 +46,11 @@ namespace Moonshot.Game.Entities
             {
                 return Color.GRAY;
             }
-            
         }
 
         private Color GetHighlightColor()
         {
-            if (this._type == EPlanetType.Fuel)
+            if (this.Type == EPlanetType.Fuel)
             {
                 return Color.LIME;
             }
@@ -60,6 +62,11 @@ namespace Moonshot.Game.Entities
 
         public void Update()
         {
+        }
+
+        public bool Collides(Vector2 mousePos)
+        {
+            return Raylib.CheckCollisionPointCircle(mousePos, Position, Size);
         }
     }
 }

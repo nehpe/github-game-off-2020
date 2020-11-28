@@ -59,6 +59,7 @@ namespace Moonshot.Game.Scenes
                         break;
                     case EGamePhase.Expanding:
                         DrawExpandingCamera();
+                        DrawConnections();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -107,11 +108,33 @@ namespace Moonshot.Game.Scenes
                 case EGamePhase.Expanding:
                     CheckForHover();
                     CheckForAttack();
+                    CheckForSelection();
+                    CheckForConnection();
                     ReplacePlanets();
                     UpdateGlobalUi();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void AddConnection(OwnedPlanet op)
+        {
+            HomePlanet hp = GetHomePlanet();
+            _connectedPlanets.Add(
+                new Connection(
+                    hp.Pos, op.Position, op.Type
+                    )
+                );
+        }
+
+        private void DrawConnections()
+        {
+            HomePlanet hp = GetHomePlanet();
+            
+            foreach (Connection c in _connectedPlanets)
+            {
+                c.Draw();
             }
         }
     }

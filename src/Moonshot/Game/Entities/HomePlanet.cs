@@ -18,15 +18,15 @@ namespace Moonshot.Game.Entities
         public void Draw()
         {
             Raylib.DrawCircle(
-                (int)Pos.X,
-                (int)Pos.Y,
+                (int) Pos.X,
+                (int) Pos.Y,
                 size,
                 Color.DARKPURPLE
             );
 
             Raylib.DrawCircleLines(
-                (int)Pos.X,
-                (int)Pos.Y,
+                (int) Pos.X,
+                (int) Pos.Y,
                 size + 2,
                 Color.PURPLE
             );
@@ -34,6 +34,11 @@ namespace Moonshot.Game.Entities
 
         public void Update()
         {
+        }
+
+        public bool Collides(Vector2 mousePos)
+        {
+            return Raylib.CheckCollisionPointCircle(mousePos, Pos, size);
         }
     }
 }
