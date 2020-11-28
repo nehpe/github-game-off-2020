@@ -27,10 +27,36 @@ namespace Moonshot.Game.Scenes
                 }
             }
 
+            Console.WriteLine(Entities.OfType<Ship>().Count());
+            
+            RemoveDestroyedShips(toRemove);
+        }
+
+        private void RemoveDestroyedShips(List<IEntity> toRemove)
+        {
             foreach (IEntity r in toRemove)
             {
                 Entities.Remove(r);
             }
+        }
+
+        private void ReplacePlanets()
+        {
+            List<Planet> planetsToRemove = new List<Planet>();
+            List<OwnedPlanet> planetsToAdd = new List<OwnedPlanet>();
+            
+            foreach (Planet p in Entities.OfType<Planet>())
+            {
+                if (!p.Destroyed) continue;
+                planetsToRemove.Add(p);
+                planetsToAdd.Add(new OwnedPlanet((int) p.Position.X, (int) p.Position.Y, p.Size, p.Type));
+            }
+
+            foreach (Planet p in planetsToRemove)
+            {
+                Entities.Remove(p);
+            }
+            Entities.AddRange(planetsToAdd);
         }
 
         private void DrawExpandingUi()
@@ -65,7 +91,7 @@ namespace Moonshot.Game.Scenes
 
         private void Attack(Planet p)
         {
-            int shipsToAttack = GameState.Ships / 2;
+            int shipsToAttack = p.Health > GameState.Ships ? GameState.Ships : p.Health;
             GameState.Ships -= shipsToAttack;
 
             HomePlanet hp = Entities.OfType<HomePlanet>().First();

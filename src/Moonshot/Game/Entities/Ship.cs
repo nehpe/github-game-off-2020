@@ -8,7 +8,7 @@ namespace Moonshot.Game.Entities
     {
         private Planet _target;
         private Vector2 _position;
-        private float _speed = 5f;
+        private float _speed = 15f;
         private Vector2 _diffVector;
 
         public bool Destroyed = false;
@@ -20,7 +20,7 @@ namespace Moonshot.Game.Entities
             startPos.Y += GameState.Rand.Next(-5, 5);
             _position = startPos;
 
-            _diffVector = target.Pos - startPos;
+            _diffVector = target.Position - startPos;
             _diffVector = Vector2.Normalize(_diffVector);
             Console.WriteLine(_diffVector);
         }
@@ -36,12 +36,10 @@ namespace Moonshot.Game.Entities
             if (Destroyed) return;
             
             _position += _diffVector * _speed * Raylib.GetFrameTime();
-            
-            if (_target.Collides(_position))
-            {
-                Destroyed = true;
-                _target.Hit();
-            }
+
+            if (!_target.Collides(_position)) return;
+            Destroyed = true;
+            _target.Hit();
         }
     }
 }

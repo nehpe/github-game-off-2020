@@ -105,6 +105,7 @@ namespace Moonshot.Game.Scenes
                 case EGamePhase.Expanding:
                     CheckForHover();
                     CheckForAttack();
+                    ReplacePlanets();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
