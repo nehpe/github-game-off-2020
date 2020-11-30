@@ -45,6 +45,11 @@ namespace Moonshot.Game.Scenes
             AssetManager.AddFont("jupiter_crash", Raylib.LoadFont("Resources/Fonts/jupiter_crash.png"));
             AssetManager.AddFont("pixantiqua", Raylib.LoadFont("Resources/Fonts/pixantiqua.png"));
             AssetManager.AddFont("alpha_beta", Raylib.LoadFont("Resources/Fonts/alpha_beta.png"));
+
+            AssetManager.AddSound("placeHome", Raylib.LoadSound("Resources/Sounds/Home_Place.wav"));
+            AssetManager.AddSound("connectionCreate", Raylib.LoadSound("Resources/Sounds/Create_Connection.wav"));
+            AssetManager.AddSound("shipLaunch", Raylib.LoadSound("Resources/Sounds/Ship_Launch.wav"));
+            AssetManager.AddSound("shipDestroy", Raylib.LoadSound("Resources/Sounds/Ship_Destroy.wav"));
         }
 
         public void Draw(RenderTexture2D target)

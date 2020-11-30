@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Moonshot.Game.Entities;
 using Moonshot.Game.Generative;
+using Moonshot.Utilities;
 using Nehpenthe;
 using Raylib_cs;
 
@@ -33,6 +34,7 @@ namespace Moonshot.Game.Scenes
 
         private void PlaceHome()
         {
+            Raylib.PlaySound(AssetManager.GetSound("placeHome"));
             GameState.CurrentPhase = EGamePhase.Expanding;
 
             Vector2i worldPos = new Vector2i(MouseUtil.ScreenToWorldPosition(_mouseCursor.Position, _camera));

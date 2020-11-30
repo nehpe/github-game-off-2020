@@ -5,6 +5,7 @@ using System.Numerics;
 using Nehpenthe;
 using Moonshot.Game.Entities;
 using Raylib_cs;
+using Moonshot.Utilities;
 
 namespace Moonshot.Game.Scenes
 {
@@ -37,6 +38,7 @@ namespace Moonshot.Game.Scenes
         {
             foreach (IEntity r in toRemove)
             {
+                Raylib.PlaySound(AssetManager.GetSound("shipDestroy"));
                 Entities.Remove(r);
             }
         }
@@ -134,6 +136,7 @@ namespace Moonshot.Game.Scenes
 
             for (int i = 0; i < shipsToAttack; i++)
             {
+                Raylib.PlaySound(AssetManager.GetSound("shipLaunch"));
                 Entities.Add(new Ship(hp.Pos, p));
             }
         }

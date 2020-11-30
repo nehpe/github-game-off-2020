@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using Moonshot.Game.Entities;
+using Moonshot.Utilities;
 using Nehpenthe;
 using Raylib_cs;
 
@@ -37,6 +38,7 @@ namespace Moonshot.Game.Scenes
 
         private void AddConnection(OwnedPlanet op)
         {
+            Raylib.PlaySound(AssetManager.GetSound("connectionCreate"));
             HomePlanet hp = GetHomePlanet();
             _connectedPlanets.Add(new Connection(hp.Pos, op.Position, op.Type));
         }

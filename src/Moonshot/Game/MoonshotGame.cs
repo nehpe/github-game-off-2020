@@ -12,11 +12,9 @@ namespace Moonshot.Game
         public MoonshotGame()
         {
             Raylib.InitWindow(MoonVars.ScreenWidth, MoonVars.ScreenHeight, "Moonshot - " + MoonVars.Version);
-            //Raylib.SetTargetFPS(MoonVars.TargetFPS);
+            Raylib.SetTargetFPS(MoonVars.TargetFPS);
             Raylib.SetExitKey(KeyboardKey.KEY_Q);
-
-            //TODO(n): remove this later
-            Raylib.SetWindowPosition(2600, 28);
+            Raylib.InitAudioDevice();
 
             this._target = Raylib.LoadRenderTexture(MoonVars.RenderWidth, MoonVars.RenderHeight);
             this._scene = new LogoScene(this);
