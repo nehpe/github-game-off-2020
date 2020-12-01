@@ -22,19 +22,18 @@ namespace Moonshot.Game.Entities
 
             _diffVector = target.Position - startPos;
             _diffVector = Vector2.Normalize(_diffVector);
-            Console.WriteLine(_diffVector);
         }
-        
-        
+
+
         public void Draw()
         {
-            Raylib.DrawPixel((int) _position.X, (int) _position.Y, Color.GOLD);
+            Raylib.DrawPixel((int)_position.X, (int)_position.Y, Color.GOLD);
         }
 
         public void Update()
         {
             if (Destroyed) return;
-            
+
             _position += _diffVector * _speed * Raylib.GetFrameTime();
 
             if (!_target.Collides(_position)) return;
